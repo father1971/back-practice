@@ -43,13 +43,9 @@ app.post('/clicks/', function (request, response) {
 });
 
 app.delete('/clicks/', function (request, response) {
-  let clicks = 0;
-  const data: ClicksData = {
-    clicks: clicks,
-  };
-
-  //response.send(data);
+  clicks = 0;
   response.sendStatus(200);
+  //response.send(clicks);
 });
 
 app.get('/', function (request, response) {
