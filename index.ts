@@ -2,12 +2,16 @@ import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { createClient } from 'redis';
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
+
+const redisClient = createClient();
+const connection = redisClient.connect();
 
 app.use(bodyParser.json());
 app.use(
@@ -22,7 +26,10 @@ interface ClicksData {
   clicks: number;
 }
 
-app.get('/clicks/', function (request, response) {
+app.get('/clicks/', async function (request, response) {
+  const redis = await connection;
+  const savedClicks = await redis.get('clicks');
+
   const data: ClicksData = {
     clicks: clicks,
   };
